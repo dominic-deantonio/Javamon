@@ -1,17 +1,16 @@
 package com.dofasu.javamon.actions;
 
+import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.models.Javamon;
-
-import java.lang.reflect.Type;
 
 public class Attack {
 
     public String name;
-    public Type type;
+    public ElementType type;
     public double strength;
     public double accuracy;
 
-    public Attack(String name, Type type, double strength, double accuracy) {
+    public Attack(String name, ElementType type, double strength, double accuracy) {
         this.name = name;
         this.type = type;
         this.strength = strength;
@@ -26,11 +25,11 @@ public class Attack {
         this.name = name;
     }
 
-    public Type getType() {
+    public ElementType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(ElementType type) {
         this.type = type;
     }
 
