@@ -9,6 +9,15 @@ public class Javamon {
     public List<Attack> attackList;
     public double health;
     public String imageUrl;
+    public String Type;
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
 
     public Javamon(String name, List<Attack> attackList, double health, String imageUrl) {
         this.name = name;
@@ -49,15 +58,22 @@ public class Javamon {
         this.imageUrl = imageUrl;
     }
 
-    public void doAttack(Javamon javamon, Attack attack){
-        // javamon attacks
+    public void doAttack(){
 
     }
 
     public void decreaseHealth (double damage, double health){
-        // calls doAttack and checks damage
 
-        // new health = old health - damage
+    }
+
+    public void fainted(){
+        if (this.health <= 0) {
+            System.out.println("Your Javamon has fainted");
+        }
+    }
+
+    public void faintedAI(){
+        if ()
     }
 
 }
