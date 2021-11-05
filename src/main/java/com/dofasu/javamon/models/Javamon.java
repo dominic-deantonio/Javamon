@@ -9,14 +9,14 @@ public class Javamon {
     public List<Attack> attackList;
     public double health;
     public String imageUrl;
-    public String Type;
+    public ElementType element;
 
-    public String getType() {
-        return Type;
+    public ElementType getElement() {
+        return element;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setElement(ElementType element) {
+        this.element = element;
     }
 
     public Javamon(String name, List<Attack> attackList, double health, String imageUrl) {
@@ -72,8 +72,5 @@ public class Javamon {
         }
     }
 
-    public void faintedAI(){
-        if ()
-    }
 
 }
