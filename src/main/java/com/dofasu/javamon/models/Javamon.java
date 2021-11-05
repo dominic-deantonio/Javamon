@@ -7,7 +7,7 @@ import java.util.List;
 public class Javamon {
     public String name;
     public List<Attack> attackList;
-    public double health;
+    public double health = 100.0;
     public String imageUrl;
     public ElementType element;
 
@@ -19,10 +19,9 @@ public class Javamon {
         this.element = element;
     }
 
-    public Javamon(String name, List<Attack> attackList, double health, String imageUrl) {
+    public Javamon(String name, List<Attack> attackList, String imageUrl) {
         this.name = name;
         this.attackList = attackList;
-        this.health = health;
         this.imageUrl = imageUrl;
     }
 
@@ -58,15 +57,15 @@ public class Javamon {
         this.imageUrl = imageUrl;
     }
 
-    public void doAttack(){
+    public void doAttack() {
 
     }
 
-    public void decreaseHealth (double damage, double health){
+    public void decreaseHealth(double damage, double health) {
 
     }
 
-    public void fainted(){
+    public void fainted() {
         if (this.health <= 0) {
             System.out.println("Your Javamon has fainted");
         }
