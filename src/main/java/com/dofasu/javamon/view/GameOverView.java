@@ -9,26 +9,26 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class StartView extends VBox {
+public class GameOverView extends VBox {
 
-    public StartView() {
+    public GameOverView() {
         super(5);
 
-        Text title = new Text("Javamon!\n");
+        Text title = new Text("Game Over!\n");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
 
         this.setFillWidth(false);
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(
-                new Text("Welcome to\n\n"),
                 title,
-                new StandardButton("Select a Javamon", onClick),
+                new StandardButton("Select another Javamon", onClick),
                 new Text("\n\n\n\n")
         );
     }
 
     final private EventHandler<ActionEvent> onClick = (ActionEvent e) -> {
-        // TODO: Replace this with a controller call?
+        // TODO: merge the navigator into the controller
         new Navigator().goTo(this.getScene(), new SelectionView());
     };
+
 }
