@@ -16,6 +16,9 @@
 .idea/*
 target/*
 
+# Ignore Mac system files
+*.DS_store
+
 # Generated files
 .idea/**/contentModel.xml
 
