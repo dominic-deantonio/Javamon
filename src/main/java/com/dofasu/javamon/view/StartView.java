@@ -1,5 +1,6 @@
 package com.dofasu.javamon.view;
 
+import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.models.Constants;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -21,7 +22,7 @@ public class StartView extends VBox {
         startButton.setPrefWidth(200);
         startButton.setTextFill(Color.WHITE);
         startButton.setOnAction((ActionEvent e) -> {
-            errorMessage.setText("");
+            Controller.startGame();
         });
         Text title = new Text("Javamon!\n");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
