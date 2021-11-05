@@ -1,19 +1,14 @@
 package com.dofasu.javamon;
 
-import com.dofasu.javamon.views.StartView;
+import com.dofasu.javamon.view.StartView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
 
-
     @Override
-    public void start(Stage mainWindow) throws IOException {
+    public void start(Stage mainWindow) {
         Scene scene = new Scene(new StartView());
         scene.getRoot().setStyle("-fx-font-family: 'sans-serif'");
         mainWindow.setMinHeight(750);
@@ -26,5 +21,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

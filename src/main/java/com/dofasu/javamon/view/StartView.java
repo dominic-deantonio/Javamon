@@ -1,11 +1,9 @@
-package com.dofasu.javamon.views;
+package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.models.Constants;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
