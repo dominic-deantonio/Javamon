@@ -38,10 +38,10 @@ public class Controller {
                 new Attack("Tackle", ElementType.NORMAL, 60, 80),
                 new Attack("Scratch", ElementType.NORMAL,50,80),
                 new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon squirtle = new Javamon("Squirtle", squirtleAttacks, health, "/squirtle.png");
+        Javamon squirtle = new Javamon("Squirtle", squirtleAttacks, health, "/squirtle.jpeg");
 
         List<Attack> bulbasaurAttacks = Arrays.asList(
-                new Attack("Leaf Blade", ElementType.WATER, 80, 80),
+                new Attack("Leaf Blade", ElementType.GRASS, 80, 80),
                 new Attack("Tackle", ElementType.NORMAL, 60, 80),
                 new Attack("Bite", ElementType.NORMAL,50,80),
                 new Attack("Sand Attack", ElementType.GROUND, 60, 80));

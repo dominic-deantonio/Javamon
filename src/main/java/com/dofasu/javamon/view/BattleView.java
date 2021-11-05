@@ -34,7 +34,7 @@ public class BattleView extends VBox {
     }
 
     private HBox getOpponent() {
-        ImageView opponentImage = Images.getImage("/pikachu.png");
+        ImageView opponentImage = Images.getImage("/pidgeotto.png");
         HBox hbox = new HBox(getHealthBar(), opponentImage);
         hbox.setSpacing(200);
         return hbox;
