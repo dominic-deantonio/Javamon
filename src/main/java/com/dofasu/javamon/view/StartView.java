@@ -1,6 +1,7 @@
 package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.controller.Navigator;
+import com.dofasu.javamon.view.components.StandardButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
