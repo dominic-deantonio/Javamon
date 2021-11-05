@@ -9,20 +9,21 @@ public class Javamon {
     public List<Attack> attackList;
     public double health = 100.0;
     public String imageUrl;
-    public ElementType element;
+    public ElementType type;
 
-    public ElementType getElement() {
-        return element;
+    public ElementType getType() {
+        return type;
     }
 
-    public void setElement(ElementType element) {
-        this.element = element;
+    public void setType(ElementType type) {
+        this.type = type;
     }
 
-    public Javamon(String name, List<Attack> attackList, String imageUrl) {
+    public Javamon(String name, List<Attack> attackList, String imageUrl, ElementType type) {
         this.name = name;
         this.attackList = attackList;
         this.imageUrl = imageUrl;
+        this.type = type;
     }
 
     public String getName() {
@@ -70,6 +71,4 @@ public class Javamon {
             System.out.println("Your Javamon has fainted");
         }
     }
-
-
 }

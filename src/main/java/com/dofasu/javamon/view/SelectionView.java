@@ -1,6 +1,10 @@
 package com.dofasu.javamon.view;
 
+import com.dofasu.javamon.controller.Controller;
+import com.dofasu.javamon.controller.Images;
 import com.dofasu.javamon.controller.Navigator;
+import com.dofasu.javamon.models.ElementType;
+import com.dofasu.javamon.models.Javamon;
 import com.dofasu.javamon.view.components.StandardButton;
 import com.dofasu.javamon.view.components.TypeLabel;
 import javafx.beans.value.ChangeListener;
@@ -17,13 +21,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SelectionView extends VBox {
+    Controller controller = Controller.getInstance();
+    Javamon selectedMon;
+    ImageView selectedMonImage = new ImageView();
+    TypeLabel selectedMonTypeLabel = new TypeLabel(ElementType.ELECTRIC);
 
     public SelectionView() {
         super(5);
+
+        selectedMonImage.setFitHeight(350);
+        selectedMonImage.setPreserveRatio(true);
 
         Text title = new Text("Select Your Javamon!");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
@@ -38,46 +50,39 @@ public class SelectionView extends VBox {
                 selector,
                 new Text("\n\n"),
                 new StandardButton("Start Battle!", startBattle)
-
         );
     }
 
     private VBox getImageAndType() {
         VBox column = new VBox();
         column.getChildren().addAll(
-                getImage("/pikachu.png"),
-                new TypeLabel()
+                selectedMonImage == null ? new Text("") : selectedMonImage,
+                selectedMonTypeLabel
         );
         column.setAlignment(Pos.CENTER);
         column.setSpacing(100);
         return column;
     }
 
-    private ImageView getImage(String path) {
-        ImageView iv = new ImageView(path);
-        iv.setPreserveRatio(true);
-        iv.setFitHeight(350);
-        return iv;
-    }
-
     private ListView<String> getListView() {
-        List<String> pokes = Arrays.asList("Pikachu", "Charmander", "Jigglypuff");
+        Collection<Javamon> javamonList = controller.getJavamonList();
         ObservableList<String> names = FXCollections.observableArrayList();
-        pokes.forEach(p -> names.add(p));
+        javamonList.forEach(p -> names.add(p.getName()));
 
         ListView<String> listView = new ListView<>(names);
-        listView.getSelectionModel().selectedItemProperty().addListener(changeSelection);
+        listView.getSelectionModel().selectedIndexProperty().addListener(selectJavamon);
         listView.getSelectionModel().select(0);
         return listView;
     }
 
-    final private ChangeListener<String> changeSelection = (observable, oldValue, newValue) -> {
-        System.out.println(oldValue);
-        System.out.println(newValue);
+    final private ChangeListener<Number> selectJavamon = (observable, oldValue, newValue) -> {
+        List<Javamon> javamonList = new ArrayList<>(controller.getJavamonList());
+        selectedMon = javamonList.get(newValue.intValue());
+        selectedMonImage.setImage(Images.getImage(selectedMon.imageUrl));
+        selectedMonTypeLabel.updateType(selectedMon.type);
     };
 
     final private EventHandler<ActionEvent> startBattle = (ActionEvent e) -> {
-        // TODO: merge the navigator into the controller
-        new Navigator().goTo(this.getScene(), new BattleView());
+        controller.startBattle(this.getScene(), selectedMon);
     };
 }
