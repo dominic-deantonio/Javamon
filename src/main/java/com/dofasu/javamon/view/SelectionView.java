@@ -2,11 +2,10 @@ package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.controller.Images;
-import com.dofasu.javamon.controller.Navigator;
 import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.models.Javamon;
 import com.dofasu.javamon.view.components.StandardButton;
-import com.dofasu.javamon.view.components.TypeLabel;
+import com.dofasu.javamon.view.components.ElementTypeButton;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,11 +28,12 @@ public class SelectionView extends VBox {
     Controller controller = Controller.getInstance();
     Javamon selectedMon;
     ImageView selectedMonImage = new ImageView();
-    TypeLabel selectedMonTypeLabel = new TypeLabel(ElementType.ELECTRIC);
+    ElementTypeButton selectedMonTypeLabel = new ElementTypeButton(ElementType.ELECTRIC);
 
     public SelectionView() {
         super(5);
-
+        controller.buildJavamon();
+        setStyle("-fx-font-family: 'sans-serif'");
         selectedMonImage.setFitHeight(350);
         selectedMonImage.setPreserveRatio(true);
 
@@ -78,8 +78,8 @@ public class SelectionView extends VBox {
     final private ChangeListener<Number> selectJavamon = (observable, oldValue, newValue) -> {
         List<Javamon> javamonList = new ArrayList<>(controller.getJavamonList());
         selectedMon = javamonList.get(newValue.intValue());
-        selectedMonImage.setImage(Images.getImage(selectedMon.imageUrl));
-        selectedMonTypeLabel.updateType(selectedMon.type);
+        selectedMonImage.setImage(Images.getImage(selectedMon.getImageUrl()));
+        selectedMonTypeLabel.updateType(selectedMon.getType());
     };
 
     final private EventHandler<ActionEvent> startBattle = (ActionEvent e) -> {

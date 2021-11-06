@@ -10,14 +10,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class GameOverView extends VBox {
+public class EndView extends VBox {
 
-    public GameOverView() {
+    public EndView() {
         super(5);
 
         Text title = new Text("Game Over!\n");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
-
+        setStyle("-fx-font-family: 'sans-serif'");
         this.setFillWidth(false);
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(

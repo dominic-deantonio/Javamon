@@ -5,11 +5,11 @@ import com.dofasu.javamon.actions.Attack;
 import java.util.List;
 
 public class Javamon {
-    public String name;
-    public List<Attack> attackList;
-    public double health = 100.0;
-    public String imageUrl;
-    public ElementType type;
+    private String name;
+    private List<Attack> attackList;
+    private double health = 100.0;
+    private String imageUrl;
+    private ElementType type;
 
     public ElementType getType() {
         return type;
@@ -34,7 +34,7 @@ public class Javamon {
         this.name = name;
     }
 
-    public List<Attack> getAttackList() {
+    public List<Attack> getAttacks() {
         return attackList;
     }
 
@@ -62,8 +62,10 @@ public class Javamon {
 
     }
 
-    public void decreaseHealth(double damage, double health) {
-
+    public void decreaseHealth(double damage) {
+        double newHealth = getHealth() - damage;
+        if (newHealth < 0) newHealth = 0;
+        setHealth(newHealth);
     }
 
     public void fainted() {
