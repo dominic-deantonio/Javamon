@@ -18,6 +18,7 @@ public class HealthBar extends HBox {
 
     public HealthBar() {
         hpLabel.setFont(Font.font("Monospace", FontWeight.BOLD, 20));
+        hpLabel.setFill(Color.WHITE);
         getChildren().addAll(bar, hpLabel);
         setSpacing(10);
     }
@@ -25,7 +26,7 @@ public class HealthBar extends HBox {
     private class StackedBar extends StackPane {
         private final double maxWidth = 300;
         Bar backBar = new Bar(maxWidth, Color.LIGHTGREY);
-        Bar frontBar = new Bar(maxWidth, Color.DARKGREEN);
+        Bar frontBar = new Bar(maxWidth, Color.GREEN);
 
         private StackedBar() {
             super();
@@ -48,7 +49,7 @@ public class HealthBar extends HBox {
             } else if (health < 66) {
                 return Color.ORANGE;
             } else {
-                return Color.DARKGREEN;
+                return Color.GREEN;
             }
         }
     }
