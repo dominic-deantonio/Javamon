@@ -21,7 +21,7 @@ public class BattleView extends VBox {
 
         player = new Combatant(controller.getPlayer(), true);
         opponent = new Combatant(controller.getOpponent(), false);
-        controller.setCombatants(player, opponent, scene); // TODO refactor to 'setBattle' and pass in the messageBox
+        controller.setBattle(player, opponent, scene, messageBox); // TODO refactor to 'setBattle' and pass in the messageBox
 
         this.setFillWidth(false);
         this.setAlignment(Pos.CENTER);

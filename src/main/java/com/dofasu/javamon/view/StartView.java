@@ -1,6 +1,6 @@
 package com.dofasu.javamon.view;
 
-import com.dofasu.javamon.controller.Navigator;
+import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.view.components.Container;
 import com.dofasu.javamon.view.components.StandardButton;
 import javafx.event.ActionEvent;
@@ -14,6 +14,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class StartView extends VBox {
+
+    Controller controller = Controller.getInstance();
 
     public StartView() {
         super(5);
@@ -32,8 +34,7 @@ public class StartView extends VBox {
     }
 
     final private EventHandler<ActionEvent> onClick = (ActionEvent e) -> {
-        // TODO: Replace this with a controller call?
-        new Navigator().goTo(this.getScene(), new SelectionView());
+        controller.goTo(this.getScene(), new SelectionView());
     };
 
     private Background getBackgroundImage() {

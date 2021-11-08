@@ -15,15 +15,17 @@ public class Combatant extends HBox {
 
     private final Javamon javamon;
     private final HealthBar healthBar = new HealthBar();
+    private final AttackButtons attackButtons;
 
     public Combatant(Javamon javamon, boolean isPlayer) {
         super();
         this.javamon = javamon;
         final CombatantInfo info = new CombatantInfo();
         ImageView image = Images.getImageView(javamon.getImageUrl());
+        attackButtons = new AttackButtons(javamon.getAttacks());
         if (isPlayer) {
             image.setScaleX(-1);
-            VBox playerGui = new VBox(info, new AttackButtons(javamon.getAttacks()));
+            VBox playerGui = new VBox(info, attackButtons);
             playerGui.setSpacing(10);
             getChildren().addAll(image, playerGui);
         } else {
@@ -48,5 +50,9 @@ public class Combatant extends HBox {
 
     public void updateHealthBar() {
         healthBar.setHp(javamon.getHealth());
+    }
+
+    public void disableAttackButtons(boolean isDisabled) {
+        attackButtons.setDisable(isDisabled);
     }
 }

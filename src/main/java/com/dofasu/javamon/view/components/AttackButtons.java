@@ -1,6 +1,6 @@
 package com.dofasu.javamon.view.components;
 
-import com.dofasu.javamon.actions.Attack;
+import com.dofasu.javamon.models.Attack;
 import com.dofasu.javamon.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +23,7 @@ public class AttackButtons extends VBox {
             for (int y = 0; y < 2; y++) {
                 Attack attack = attacks.get(index);
                 AttackButton button = new AttackButton(attack, (e) -> {
-                    controller.attackOpponent(attack);
+                    controller.next(attack);
                 });
                 buttons.add(button);
                 row.getChildren().add(button);
