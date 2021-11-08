@@ -2,7 +2,9 @@ package com.dofasu.javamon.models;
 
 import com.dofasu.javamon.actions.Attack;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Javamon {
     private String name;
@@ -68,9 +70,16 @@ public class Javamon {
         setHealth(newHealth);
     }
 
-    public void fainted() {
-        if (this.health <= 0) {
-            System.out.println("Your Javamon has fainted");
-        }
+    public double getEffectiveness() {
+        Map<ElementType, List<ElementType>> effectiveAgainstFire = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstWater = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstGrass = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstElectric = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstRock = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstNormal = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstFlying = new HashMap<>();
+        Map<ElementType, List<ElementType>> effectiveAgainstGround = new HashMap<>();
+
+        return 0;
     }
 }

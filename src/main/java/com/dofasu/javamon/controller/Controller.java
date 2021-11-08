@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Controller {
 
@@ -116,22 +117,41 @@ public class Controller {
         return player;
     }
 
-    // This is called by the GUI attack buttons
+    public void attack(Attack attack){
+        double damage = calculateDamage(attack);
+        opponent.decreaseHealth(damage);
+        opponentCombatant.updateHealthBar();
+        checkGameOver();
+    }
+
     public void attackOpponent(Attack attack) {
-        // TODO: Create a better attack algorithm
-//        if (didMiss(attack)) {
-//            // IT missed
-//        } else {
-            opponent.decreaseHealth(attack.getStrength() * .2);
-            opponentCombatant.updateHealthBar();
-            checkGameOver();
-//        }
+        if (didHit(attack)) {
+            attack(attack);
+        } else {
+            System.out.println("The attack missed");
+        }
     }
 
     private void attackPlayer(Attack attack) {
         // TODO: have AI attack the player and update the UI
         // The opponent will pick a random attack, which uses random number generator
+        double attackChoice = getRandomNumberBetween(1, 4);
+
+
+        if (didHit(attack)) {
+            attack(attack);
+        } else {
+            System.out.println("The attack missed");
+        }
+
     }
+
+    private double calculateDamage(Attack attack) {
+        double effectiveness = opponent.getEffectiveness();
+        double damage = attack.getStrength() * effectiveness;
+        return damage;
+    }
+
 
     // This is called after an attack and the GUI is updated to show the attack results
     private void checkGameOver() {
@@ -145,16 +165,14 @@ public class Controller {
         this.scene = scene;
     }
 
-    // TODO: Create the didMiss method
-//    private boolean didMiss(Attack attack) {
-//        double acc = attack.getAccuracy();
-//        // TODO: randomly determine if it missed based on the accuracy
-//        boolean didMiss = getRandomNumberBetweenOneAnd100() > acc;
-//        return didMiss;
-//    }
+    private boolean didHit(Attack attack) {
+        double acc = attack.getAccuracy();
+        double hitChance = getRandomNumberBetween(0, 100);
+        return hitChance < acc;
+    }
 
-    // TODO: Random number generator
-    private int getRandomBetween(int min, int max){
-        return 0;
+    private int getRandomNumberBetween(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 }
