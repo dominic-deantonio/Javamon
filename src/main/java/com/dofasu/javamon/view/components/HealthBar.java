@@ -17,7 +17,7 @@ public class HealthBar extends HBox {
     StackedBar bar = new StackedBar();
 
     public HealthBar() {
-        hpLabel.setFont(Font.font("Menlo", FontWeight.BOLD, 20));
+        hpLabel.setFont(Font.font("Monospace", FontWeight.BOLD, 20));
         getChildren().addAll(bar, hpLabel);
         setSpacing(10);
     }
@@ -64,7 +64,7 @@ public class HealthBar extends HBox {
 
     public void setHp(double newHealth) {
         currentHp = (int) newHealth;
-        // Without this, the image jumps around when the HP amount changes
+        // Without padding, the image jumps around when the HP amount changes
         String digitPadding = currentHp < 10 ? "  " : currentHp < 100 ? " " : "";
 
         hpLabel.setText(digitPadding + currentHp + " HP");

@@ -7,11 +7,14 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class AttackButtons extends VBox {
 
-    Controller controller = Controller.getInstance();
+    private Controller controller = Controller.getInstance();
+    private Collection<AttackButton> buttons = new ArrayList<>();
 
     public AttackButtons(List<Attack> attacks) {
         int index = 0;
@@ -19,15 +22,22 @@ public class AttackButtons extends VBox {
             HBox row = new HBox();
             for (int y = 0; y < 2; y++) {
                 Attack attack = attacks.get(index);
-                row.getChildren().add(new AttackButton(attack, (e) -> {
+                AttackButton button = new AttackButton(attack, (e) -> {
                     controller.attackOpponent(attack);
-                }));
+                });
+                buttons.add(button);
+                row.getChildren().add(button);
                 index++;
             }
             row.setSpacing(5);
             getChildren().add(row);
         }
         setSpacing(5);
+    }
+
+    private void disableButtons(boolean isDisabled) {
+        for (AttackButton b : buttons)
+            b.setDisable(isDisabled);
     }
 
     private class AttackButton extends ElementButton {
