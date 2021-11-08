@@ -48,8 +48,4 @@ public class Attack {
     public void setAccuracy(double accuracy) {
         this.accuracy = accuracy;
     }
-
-    public void attack(Javamon javamon){
-
-    }
 }

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Controller {
 
@@ -116,22 +117,46 @@ public class Controller {
         return player;
     }
 
-    // This is called by the GUI attack buttons
+    public void attack(Attack attack, Javamon target, Combatant combatant){
+        double damage = calculateDamage(attack, target);
+        target.decreaseHealth(damage);
+        combatant.updateHealthBar();
+        checkGameOver();
+    }
+
     public void attackOpponent(Attack attack) {
-        // TODO: Create a better attack algorithm
-//        if (didMiss(attack)) {
-//            // IT missed
-//        } else {
-            opponent.decreaseHealth(attack.getStrength() * .2);
-            opponentCombatant.updateHealthBar();
-            checkGameOver();
-//        }
+        if (didHit(attack)) {
+            attack(attack, opponent, opponentCombatant);
+        } else {
+            System.out.println("The attack missed");
+        }
+
+        attackPlayer(getRandomAttack(opponent));
+    }
+
+    private Attack getRandomAttack(Javamon mon){
+        int attackChoice = getRandomNumberBetween(0, 3);
+        Attack selectedAttack = mon.getAttacks().get(attackChoice);
+        return selectedAttack;
     }
 
     private void attackPlayer(Attack attack) {
         // TODO: have AI attack the player and update the UI
-        // The opponent will pick a random attack, which uses random number generator
+
+
+
+        if (didHit(attack)) {
+            attack(attack, player, playerCombatant);
+        } else {
+            System.out.println("The attack missed");
+        }
     }
+
+    private double calculateDamage(Attack attack, Javamon javamon ) {
+        double effectiveness = javamon.getType().getEffectiveness(attack.getType());
+        return attack.getStrength() * effectiveness * 0.2;
+    }
+
 
     // This is called after an attack and the GUI is updated to show the attack results
     private void checkGameOver() {
@@ -145,16 +170,14 @@ public class Controller {
         this.scene = scene;
     }
 
-    // TODO: Create the didMiss method
-//    private boolean didMiss(Attack attack) {
-//        double acc = attack.getAccuracy();
-//        // TODO: randomly determine if it missed based on the accuracy
-//        boolean didMiss = getRandomNumberBetweenOneAnd100() > acc;
-//        return didMiss;
-//    }
+    private boolean didHit(Attack attack) {
+        double acc = attack.getAccuracy();
+        double hitChance = getRandomNumberBetween(0, 100);
+        return hitChance < acc;
+    }
 
-    // TODO: Random number generator
-    private int getRandomBetween(int min, int max){
-        return 0;
+    public static int getRandomNumberBetween(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 }
