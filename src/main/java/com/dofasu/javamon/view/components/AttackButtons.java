@@ -43,7 +43,7 @@ public class AttackButtons extends VBox {
     private class AttackButton extends ElementButton {
         public AttackButton(Attack attack, EventHandler<ActionEvent> eventHandler) {
             super(attack.getType(), attack.getName());
-            setPrefWidth(190);
+            setPrefWidth(200);
             setPrefHeight(40);
             setStyle(getColor());
             setOnAction(eventHandler);

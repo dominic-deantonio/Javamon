@@ -18,6 +18,8 @@ public class Main extends Application {
         scene.getRoot().setStyle("-fx-font-family: 'sans-serif'");
         window.setMinHeight(750);
         window.setMinWidth(1100);
+        window.setMaxHeight(750);
+        window.setMinWidth(1100);
         window.setTitle("Javamon");
         window.setScene(scene);
         window.show();

@@ -4,7 +4,8 @@ import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.view.components.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 public class BattleView extends VBox {
@@ -30,5 +31,13 @@ public class BattleView extends VBox {
                 player,
                 messageBox
         );
+        setBackground(getBackgroundImage());
+    }
+
+    // TODO move this method into controller?
+    private Background getBackgroundImage() {
+        Image image = new Image("/background3.png", true);
+        BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1, 1, true, true, false, false));
+        return new Background(bgImage);
     }
 }

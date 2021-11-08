@@ -3,6 +3,7 @@ package com.dofasu.javamon.view.components;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MessageBox extends StackPane {
@@ -15,6 +16,9 @@ public class MessageBox extends StackPane {
         box.setArcHeight(10.0);
         box.setStrokeWidth(2);
         box.setStroke(Color.BLACK);
+
+        messageText.setFont(Font.font("monospace", 25));
+
         getChildren().addAll(box, messageText);
     }
 

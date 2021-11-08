@@ -4,6 +4,7 @@ import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.controller.Images;
 import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.models.Javamon;
+import com.dofasu.javamon.view.components.Container;
 import com.dofasu.javamon.view.components.StandardButton;
 import com.dofasu.javamon.view.components.ElementTypeButton;
 import javafx.beans.value.ChangeListener;
@@ -12,10 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -37,8 +40,9 @@ public class SelectionView extends VBox {
         selectedMonImage.setFitHeight(350);
         selectedMonImage.setPreserveRatio(true);
 
-        Text title = new Text("Select Your Javamon!");
+        Text title = new Text("Select your Javamon");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
+        title.setFill(Color.WHITE);
 
         HBox selector = new HBox(getListView(), getImageAndType());
         selector.setSpacing(100);
@@ -46,14 +50,16 @@ public class SelectionView extends VBox {
         this.setFillWidth(false);
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(
-                title,
+                new Container(1000, 100, title, .4),
                 selector,
                 new Text("\n\n"),
                 new StandardButton("Start Battle!", startBattle)
         );
+
+        setBackground(getBackgroundImage());
     }
 
-    private VBox getImageAndType() {
+    private Node getImageAndType() {
         VBox column = new VBox();
         column.getChildren().addAll(
                 selectedMonImage == null ? new Text("") : selectedMonImage,
@@ -61,7 +67,10 @@ public class SelectionView extends VBox {
         );
         column.setAlignment(Pos.CENTER);
         column.setSpacing(100);
-        return column;
+
+
+
+        return new Container(400, 500,  column, .4);
     }
 
     private ListView<String> getListView() {
@@ -72,6 +81,7 @@ public class SelectionView extends VBox {
         ListView<String> listView = new ListView<>(names);
         listView.getSelectionModel().selectedIndexProperty().addListener(selectJavamon);
         listView.getSelectionModel().select(0);
+
         return listView;
     }
 
@@ -85,4 +95,10 @@ public class SelectionView extends VBox {
     final private EventHandler<ActionEvent> startBattle = (ActionEvent e) -> {
         controller.startBattle(this.getScene(), selectedMon);
     };
+
+    private Background getBackgroundImage() {
+        Image image = new Image("/background1.png", true);
+        BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1, 1, true, true, false, false));
+        return new Background(bgImage);
+    }
 }
