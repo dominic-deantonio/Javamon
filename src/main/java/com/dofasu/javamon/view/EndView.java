@@ -1,6 +1,6 @@
 package com.dofasu.javamon.view;
 
-import com.dofasu.javamon.controller.Navigator;
+import com.dofasu.javamon.controller.Controller;
 import com.dofasu.javamon.view.components.StandardButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +11,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class EndView extends VBox {
+
+    Controller controller = Controller.getInstance();
 
     public EndView() {
         super(5);
@@ -29,7 +31,7 @@ public class EndView extends VBox {
 
     final private EventHandler<ActionEvent> onClick = (ActionEvent e) -> {
         // TODO: merge the navigator into the controller
-        new Navigator().goTo(this.getScene(), new SelectionView());
+        controller.goTo(this.getScene(), new SelectionView());
     };
 
 }

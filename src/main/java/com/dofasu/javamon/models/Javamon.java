@@ -1,24 +1,17 @@
 package com.dofasu.javamon.models;
 
-import com.dofasu.javamon.actions.Attack;
-
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Javamon {
-    private String name;
-    private List<Attack> attackList;
+    private final String name, imageUrl;
+    private final List<Attack> attackList;
+    private final ElementType type;
     private double health = 100.0;
-    private String imageUrl;
-    private ElementType type;
 
     public ElementType getType() {
         return type;
-    }
-
-    public void setType(ElementType type) {
-        this.type = type;
     }
 
     public Javamon(String name, List<Attack> attackList, String imageUrl, ElementType type) {
@@ -32,16 +25,8 @@ public class Javamon {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<Attack> getAttacks() {
         return attackList;
-    }
-
-    public void setAttackList(List<Attack> attackList) {
-        this.attackList = attackList;
     }
 
     public double getHealth() {
@@ -56,30 +41,73 @@ public class Javamon {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void doAttack() {
-
-    }
-
     public void decreaseHealth(double damage) {
         double newHealth = getHealth() - damage;
         if (newHealth < 0) newHealth = 0;
         setHealth(newHealth);
     }
 
-    public double getEffectiveness() {
-        Map<ElementType, List<ElementType>> effectiveAgainstFire = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstWater = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstGrass = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstElectric = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstRock = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstNormal = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstFlying = new HashMap<>();
-        Map<ElementType, List<ElementType>> effectiveAgainstGround = new HashMap<>();
+    public static List<Javamon> buildList() {
+        List<Javamon> list = new ArrayList<>();
 
-        return 1;
+        List<Attack> pikachuAttacks = Arrays.asList(
+                new Attack("Thunderbolt", ElementType.ELECTRIC, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Scratch", ElementType.NORMAL, 50, 80),
+                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
+        Javamon pikachu = new Javamon("Pikachu", pikachuAttacks, "/pikachu.png", ElementType.ELECTRIC);
+
+        List<Attack> charmanderAttacks = Arrays.asList(
+                new Attack("Flamethrower", ElementType.FIRE, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Scratch", ElementType.NORMAL, 50, 80),
+                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
+        Javamon charmander = new Javamon("Charmander", charmanderAttacks, "/charmander.png", ElementType.FIRE);
+
+        List<Attack> squirtleAttacks = Arrays.asList(
+                new Attack("Water gun", ElementType.WATER, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Scratch", ElementType.NORMAL, 50, 80),
+                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
+        Javamon squirtle = new Javamon("Squirtle", squirtleAttacks, "/squirtle.png", ElementType.WATER);
+
+        List<Attack> bulbasaurAttacks = Arrays.asList(
+                new Attack("Leaf Blade", ElementType.GRASS, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Bite", ElementType.NORMAL, 50, 80),
+                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
+        Javamon bulbasaur = new Javamon("Bulbasaur", bulbasaurAttacks, "/bulbasaur.png", ElementType.GRASS);
+
+        List<Attack> geodudeAttacks = Arrays.asList(
+                new Attack("Rock Throw", ElementType.ROCK, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Punch", ElementType.NORMAL, 50, 80),
+                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
+        Javamon geodude = new Javamon("Geodude", geodudeAttacks, "/geodude.png", ElementType.ROCK);
+
+        List<Attack> pidgeottoAttacks = Arrays.asList(
+                new Attack("Air Slash", ElementType.FLYING, 80, 80),
+                new Attack("Tackle", ElementType.NORMAL, 60, 80),
+                new Attack("Scratch", ElementType.NORMAL, 50, 80),
+                new Attack("Gust", ElementType.FLYING, 60, 80));
+        Javamon pidgeotto = new Javamon("Pidgeotto", pidgeottoAttacks, "/pidgeotto.png", ElementType.FLYING);
+
+        List<Attack> snorlaxAttacks = Arrays.asList(
+                new Attack("Earthquake", ElementType.GROUND, 80, 80),
+                new Attack("Body Slam", ElementType.NORMAL, 60, 80),
+                new Attack("Punch", ElementType.NORMAL, 50, 80),
+                new Attack("Roll", ElementType.NORMAL, 60, 80));
+        Javamon snorlax = new Javamon("Snorlax", snorlaxAttacks, "/snorlax.png", ElementType.NORMAL);
+
+        list.add(pikachu);
+        list.add(charmander);
+        list.add(squirtle);
+        list.add(bulbasaur);
+        list.add(geodude);
+        list.add(pidgeotto);
+        list.add(snorlax);
+
+        return list;
+
     }
 }

@@ -1,14 +1,14 @@
-package com.dofasu.javamon.actions;
+package com.dofasu.javamon.models;
 
 import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.models.Javamon;
 
 public class Attack {
 
-    public String name;
-    public ElementType type;
-    public double strength;
-    public double accuracy;
+    private final String name;
+    private final ElementType type;
+    private final double strength;
+    private final double accuracy;
 
     public Attack(String name, ElementType type, double strength, double accuracy) {
         this.name = name;
@@ -21,31 +21,16 @@ public class Attack {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ElementType getType() {
         return type;
-    }
-
-    public void setType(ElementType type) {
-        this.type = type;
     }
 
     public double getStrength() {
         return strength;
     }
 
-    public void setStrength(double strength) {
-        this.strength = strength;
-    }
-
     public double getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
-    }
 }

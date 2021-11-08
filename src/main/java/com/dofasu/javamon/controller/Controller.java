@@ -1,25 +1,28 @@
 package com.dofasu.javamon.controller;
 
-import com.dofasu.javamon.actions.Attack;
+import com.dofasu.javamon.models.Attack;
 import com.dofasu.javamon.models.Javamon;
-import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.view.BattleView;
 import com.dofasu.javamon.view.EndView;
 import com.dofasu.javamon.view.components.Combatant;
+import com.dofasu.javamon.view.components.MessageBox;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Controller {
 
+    enum BattleStatus {
+        PLAYER_ATTACK_START, PLAYER_ATTACK_END, OPPONENT_ATTACK_START, OPPONENT_ATTACK_END
+    }
+
     private static final Controller instance = new Controller();
 
     // Prevent instantiation (uses Singleton pattern)
     private Controller() {
-        buildJavamon();
+        buildJavamonList();
     }
 
     public static Controller getInstance() {
@@ -31,70 +34,9 @@ public class Controller {
     private Javamon player, opponent;
     private Combatant playerCombatant, opponentCombatant;
     private Scene scene;
-
-    public void buildJavamon() {
-
-        List<Javamon> javamonList = new ArrayList<>();
-
-        List<Attack> pikachuAttacks = Arrays.asList(
-                new Attack("Thunderbolt", ElementType.ELECTRIC, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Scratch", ElementType.NORMAL, 50, 80),
-                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon pikachu = new Javamon("Pikachu", pikachuAttacks, "/pikachu.png", ElementType.ELECTRIC);
-
-        List<Attack> charmanderAttacks = Arrays.asList(
-                new Attack("Flamethrower", ElementType.FIRE, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Scratch", ElementType.NORMAL, 50, 80),
-                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon charmander = new Javamon("Charmander", charmanderAttacks, "/charmander.png", ElementType.FIRE);
-
-        List<Attack> squirtleAttacks = Arrays.asList(
-                new Attack("Water gun", ElementType.WATER, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Scratch", ElementType.NORMAL, 50, 80),
-                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon squirtle = new Javamon("Squirtle", squirtleAttacks, "/squirtle.png", ElementType.WATER);
-
-        List<Attack> bulbasaurAttacks = Arrays.asList(
-                new Attack("Leaf Blade", ElementType.GRASS, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Bite", ElementType.NORMAL, 50, 80),
-                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon bulbasaur = new Javamon("Bulbasaur", bulbasaurAttacks, "/bulbasaur.png", ElementType.GRASS);
-
-        List<Attack> geodudeAttacks = Arrays.asList(
-                new Attack("Rock Throw", ElementType.ROCK, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Punch", ElementType.NORMAL, 50, 80),
-                new Attack("Sand Attack", ElementType.GROUND, 60, 80));
-        Javamon geodude = new Javamon("Geodude", geodudeAttacks, "/geodude.png", ElementType.ROCK);
-
-        List<Attack> pidgeottoAttacks = Arrays.asList(
-                new Attack("Air Slash", ElementType.FLYING, 80, 80),
-                new Attack("Tackle", ElementType.NORMAL, 60, 80),
-                new Attack("Scratch", ElementType.NORMAL, 50, 80),
-                new Attack("Gust", ElementType.FLYING, 60, 80));
-        Javamon pidgeotto = new Javamon("Pidgeotto", pidgeottoAttacks, "/pidgeotto.png", ElementType.FLYING);
-
-        List<Attack> snorlaxAttacks = Arrays.asList(
-                new Attack("Earthquake", ElementType.GROUND, 80, 80),
-                new Attack("Body Slam", ElementType.NORMAL, 60, 80),
-                new Attack("Punch", ElementType.NORMAL, 50, 80),
-                new Attack("Roll", ElementType.NORMAL, 60, 80));
-        Javamon snorlax = new Javamon("Snorlax", snorlaxAttacks, "/snorlax.png", ElementType.NORMAL);
-
-        javamonList.add(pikachu);
-        javamonList.add(charmander);
-        javamonList.add(squirtle);
-        javamonList.add(bulbasaur);
-        javamonList.add(geodude);
-        javamonList.add(pidgeotto);
-        javamonList.add(snorlax);
-
-        this.javamonList = javamonList;
-    }
+    private MessageBox messageBox;
+    private BattleStatus status = BattleStatus.OPPONENT_ATTACK_END;
+    private Attack nextAttack;
 
     public List<Javamon> getJavamonList() {
         return javamonList;
@@ -106,68 +48,87 @@ public class Controller {
         // TODO: Select opponent Javamon randomly instead of hardcoding. Consider disallowing same Javamon as player
         this.opponent = getJavamonList().get(1);
 
-        new Navigator().goTo(scene, new BattleView(scene));
+        goTo(scene, new BattleView(scene));
     }
 
-    public Javamon getOpponent() {
-        return this.opponent;
-    }
-
-    public Javamon getPlayer() {
-        return player;
-    }
-
-    public void attack(Attack attack, Javamon target, Combatant combatant){
+    public void doAttack(Attack attack, Javamon target, Combatant combatant) {
         double damage = calculateDamage(attack, target);
         target.decreaseHealth(damage);
         combatant.updateHealthBar();
         checkGameOver();
     }
 
-    public void attackOpponent(Attack attack) {
-        if (didHit(attack)) {
-            attack(attack, opponent, opponentCombatant);
-        } else {
-            System.out.println("The attack missed");
+    public void next(Attack attack) {
+        switch (status) {
+            case OPPONENT_ATTACK_END:
+                messageBox.updateMessage(player.getName() + " used " + attack.getName());
+                status = BattleStatus.PLAYER_ATTACK_START;
+                messageBox.disableButton(false);
+                playerCombatant.disableAttackButtons(true);
+                nextAttack = attack;
+                break;
+            case PLAYER_ATTACK_START:
+                if (didHit(nextAttack)) {
+                    doAttack(nextAttack, opponent, opponentCombatant);
+                    messageBox.updateMessage(getEffectivenessString(attack, opponent));
+                } else {
+                    messageBox.updateMessage(player.getName() + " missed");
+                }
+                status = BattleStatus.PLAYER_ATTACK_END;
+                messageBox.disableButton(false);
+                playerCombatant.disableAttackButtons(true);
+                break;
+            case PLAYER_ATTACK_END:
+                playerCombatant.disableAttackButtons(true);
+                nextAttack = getRandomAttack(opponent);
+                messageBox.updateMessage(opponent.getName() + " used " + nextAttack.getName());
+                status = BattleStatus.OPPONENT_ATTACK_START;
+                messageBox.disableButton(false);
+                break;
+            case OPPONENT_ATTACK_START:
+                if (didHit(nextAttack)) {
+                    doAttack(nextAttack, player, playerCombatant);
+                    messageBox.updateMessage(getEffectivenessString(attack, player));
+                } else {
+                    messageBox.updateMessage(opponent.getName() + " missed");
+                }
+
+                messageBox.disableButton(true);
+                playerCombatant.disableAttackButtons(false);
+                status = BattleStatus.OPPONENT_ATTACK_END;
+                break;
+            default:
+                messageBox.updateMessage("No current status");
         }
-
-        attackPlayer(getRandomAttack(opponent));
     }
 
-    private Attack getRandomAttack(Javamon mon){
-        int attackChoice = getRandomNumberBetween(0, 3);
-        Attack selectedAttack = mon.getAttacks().get(attackChoice);
-        return selectedAttack;
+    private Attack getRandomAttack(Javamon attacker) {
+        int attackIndex = getRandomNumberBetween(0, 3);
+        return attacker.getAttacks().get(attackIndex);
     }
 
-    private void attackPlayer(Attack attack) {
-        // TODO: have AI attack the player and update the UI
-
-
-
-        if (didHit(attack)) {
-            attack(attack, player, playerCombatant);
-        } else {
-            System.out.println("The attack missed");
-        }
-    }
-
-    private double calculateDamage(Attack attack, Javamon javamon ) {
+    private double calculateDamage(Attack attack, Javamon javamon) {
         double effectiveness = javamon.getType().getEffectiveness(attack.getType());
         return attack.getStrength() * effectiveness * 0.2;
     }
 
-
-    // This is called after an attack and the GUI is updated to show the attack results
-    private void checkGameOver() {
-        if (opponent.getHealth() <= 0 || player.getHealth() <= 0)
-            new Navigator().goTo(scene, new EndView());
+    private String getEffectivenessString(Attack attack, Javamon javamon) {
+        // TODO: Need a method to get the actual string
+        return "It's super effective (not really)!";
     }
 
-    public void setCombatants(Combatant player, Combatant opponent, Scene scene) {
+    private void checkGameOver() {
+        if (opponent.getHealth() <= 0 || player.getHealth() <= 0) {
+            goTo(scene, new EndView());
+            status = BattleStatus.OPPONENT_ATTACK_END;
+        }
+    }
+
+    public void setBattle(Combatant player, Combatant opponent, Scene scene, MessageBox messageBox) {
         this.playerCombatant = player;
         this.opponentCombatant = opponent;
         this.scene = scene;
+        this.messageBox = messageBox;
     }
 
     private boolean didHit(Attack attack) {
@@ -176,8 +137,24 @@ public class Controller {
         return hitChance < acc;
     }
 
-    public static int getRandomNumberBetween(int min, int max) {
+    static int getRandomNumberBetween(int min, int max) {
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    public void buildJavamonList() {
+        this.javamonList = Javamon.buildList();
+    }
+
+    public void goTo(Scene scene, Pane nextView) {
+        scene.setRoot(nextView);
+    }
+
+    public Javamon getOpponent() {
+        return this.opponent;
+    }
+
+    public Javamon getPlayer() {
+        return player;
     }
 }

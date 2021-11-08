@@ -35,7 +35,7 @@ public class SelectionView extends VBox {
 
     public SelectionView() {
         super(5);
-        controller.buildJavamon();
+        controller.buildJavamonList();
         setStyle("-fx-font-family: 'sans-serif'");
         selectedMonImage.setFitHeight(350);
         selectedMonImage.setPreserveRatio(true);
