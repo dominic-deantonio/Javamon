@@ -80,6 +80,6 @@ public class Javamon {
         Map<ElementType, List<ElementType>> effectiveAgainstFlying = new HashMap<>();
         Map<ElementType, List<ElementType>> effectiveAgainstGround = new HashMap<>();
 
-        return 0;
+        return 1;
     }
 }

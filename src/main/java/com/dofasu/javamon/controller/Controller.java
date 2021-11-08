@@ -136,20 +136,29 @@ public class Controller {
         // TODO: have AI attack the player and update the UI
         // The opponent will pick a random attack, which uses random number generator
         double attackChoice = getRandomNumberBetween(1, 4);
+        if (attackChoice == 1) {
+            opponent.getAttacks().get(0);
+        }
+         else if (attackChoice == 2){
+            opponent.getAttacks().get(1);
+        }
 
+         else if (attackChoice ==3){
+            opponent.getAttacks().get(2);
+        }
+         else
+            opponent.getAttacks().get(4);
 
         if (didHit(attack)) {
             attack(attack);
         } else {
             System.out.println("The attack missed");
         }
-
     }
 
     private double calculateDamage(Attack attack) {
         double effectiveness = opponent.getEffectiveness();
-        double damage = attack.getStrength() * effectiveness;
-        return damage;
+        return attack.getStrength() * effectiveness;
     }
 
 
