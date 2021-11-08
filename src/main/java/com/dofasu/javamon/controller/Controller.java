@@ -119,13 +119,18 @@ public class Controller {
     // This is called by the GUI attack buttons
     public void attackOpponent(Attack attack) {
         // TODO: Create a better attack algorithm
-        opponent.decreaseHealth(attack.getStrength());
-        opponentCombatant.updateHealthBar();
-        checkGameOver();
+//        if (didMiss(attack)) {
+//            // IT missed
+//        } else {
+            opponent.decreaseHealth(attack.getStrength() * .2);
+            opponentCombatant.updateHealthBar();
+            checkGameOver();
+//        }
     }
 
-    private void attackPlayer(Attack attack){
+    private void attackPlayer(Attack attack) {
         // TODO: have AI attack the player and update the UI
+        // The opponent will pick a random attack, which uses random number generator
     }
 
     // This is called after an attack and the GUI is updated to show the attack results
@@ -138,5 +143,18 @@ public class Controller {
         this.playerCombatant = player;
         this.opponentCombatant = opponent;
         this.scene = scene;
+    }
+
+    // TODO: Create the didMiss method
+//    private boolean didMiss(Attack attack) {
+//        double acc = attack.getAccuracy();
+//        // TODO: randomly determine if it missed based on the accuracy
+//        boolean didMiss = getRandomNumberBetweenOneAnd100() > acc;
+//        return didMiss;
+//    }
+
+    // TODO: Random number generator
+    private int getRandomBetween(int min, int max){
+        return 0;
     }
 }
