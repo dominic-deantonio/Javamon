@@ -23,6 +23,15 @@ public class HealthBar extends HBox {
         setSpacing(10);
     }
 
+    public void setHp(double newHealth) {
+        currentHp = (int) newHealth;
+        // Without padding, the image jumps around when the HP amount changes
+        String digitPadding = currentHp < 10 ? "  " : currentHp < 100 ? " " : "";
+
+        hpLabel.setText(digitPadding + currentHp + " HP");
+        bar.updateFrontBar();
+    }
+
     private class StackedBar extends StackPane {
         private final double maxWidth = 300;
         Bar backBar = new Bar(maxWidth, Color.LIGHTGREY);
@@ -61,14 +70,5 @@ public class HealthBar extends HBox {
             setArcWidth(10.0);
             setArcHeight(10.0);
         }
-    }
-
-    public void setHp(double newHealth) {
-        currentHp = (int) newHealth;
-        // Without padding, the image jumps around when the HP amount changes
-        String digitPadding = currentHp < 10 ? "  " : currentHp < 100 ? " " : "";
-
-        hpLabel.setText(digitPadding + currentHp + " HP");
-        bar.updateFrontBar();
     }
 }

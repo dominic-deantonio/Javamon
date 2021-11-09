@@ -47,7 +47,6 @@ public class EndView extends VBox {
     }
 
     final private EventHandler<ActionEvent> onClick = (ActionEvent e) -> {
-        // TODO: merge the navigator into the controller
         controller.goTo(this.getScene(), new SelectionView());
     };
 

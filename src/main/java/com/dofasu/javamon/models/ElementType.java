@@ -29,9 +29,8 @@ public enum ElementType {
     }
 
 
-    private static Map<ElementType, List<ElementType>> buildMostEffective() {
+    private static Map<ElementType, List<ElementType>> buildLessEffective() {
         Map<ElementType, List<ElementType>> lessEffective = new HashMap<>();
-        //Normal types excluded
         lessEffective.put(FIRE, Arrays.asList(WATER, ROCK));
         lessEffective.put(WATER, Arrays.asList(GRASS, ELECTRIC));
         lessEffective.put(GRASS, Arrays.asList(FLYING, FIRE));
@@ -39,13 +38,13 @@ public enum ElementType {
         lessEffective.put(GROUND, Arrays.asList(WATER, GRASS));
         lessEffective.put(FLYING, Arrays.asList(ROCK, ELECTRIC));
         lessEffective.put(ROCK, Arrays.asList(WATER, GRASS, GROUND));
+        lessEffective.put(NORMAL, Arrays.asList());
 
         return lessEffective;
     }
 
-    private static Map<ElementType, List<ElementType>> buildLessEffective() {
+    private static Map<ElementType, List<ElementType>> buildMostEffective() {
         Map<ElementType, List<ElementType>> moreEffective = new HashMap<>();
-        //Normal types excluded
         moreEffective.put(FIRE, Arrays.asList(GRASS));
         moreEffective.put(WATER, Arrays.asList(FIRE));
         moreEffective.put(GRASS, Arrays.asList(GROUND, WATER, ELECTRIC));
@@ -53,32 +52,31 @@ public enum ElementType {
         moreEffective.put(GROUND, Arrays.asList(ROCK));
         moreEffective.put(FLYING, Arrays.asList(GRASS));
         moreEffective.put(ROCK, Arrays.asList(FLYING, FIRE));
-
+        moreEffective.put(NORMAL, Arrays.asList());
 
         return moreEffective;
     }
 
-    // TODO: Create type effectiveness
     public double getEffectiveness(ElementType otherType) {
         List<ElementType> strongAgainst = mostEffective.get(this);
         if (strongAgainst.contains(otherType)) {
-            return 1.5;
+            return 0.5;
         }
 
         List<ElementType> weakAgainst = lessEffective.get(this);
-        if(weakAgainst.contains(otherType)){
-            return 0.5;
+        if (weakAgainst.contains(otherType)) {
+            return 1.5;
         }
 
         return 1.0;
     }
 
-    public String getEffectivenessString(double multiplier) {
+    public String getEffectivenessString(ElementType otherType) {
         Map<Double, String> effectiveness = new HashMap<>();
-        effectiveness.put(.5, "It's not very effective");
+        effectiveness.put(0.5, "It's not very effective");
         effectiveness.put(1.0, "It's effective");
         effectiveness.put(1.5, "It's super effective");
-
+        double multiplier = getEffectiveness(otherType);
         return effectiveness.get(multiplier);
     }
 }
