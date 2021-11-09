@@ -43,11 +43,22 @@ public class Controller {
     }
 
     public void startBattle(Scene scene, Javamon player) {
+        // Assign player and random opponent
         this.player = player;
-
-        // TODO: Select opponent Javamon randomly instead of hardcoding. Consider disallowing same Javamon as player
+        // DONE: Select opponent Javamon randomly instead of hardcoding. Consider disallowing same Javamon as player
+        assignRandomOpponent();
 
         goTo(scene, new BattleView(scene));
+    }
+
+    private void assignRandomOpponent() {
+        // Generate random opponent different than the player itself. Streams??
+        int maxIndex = (javamonList.size()-1);
+        Javamon randomOpponent = getJavamonList().get(getRandomNumberBetween(0, maxIndex));
+        while (randomOpponent.equals(getPlayer())) {
+            randomOpponent = getJavamonList().get(getRandomNumberBetween(0, maxIndex));
+        }
+        this.opponent = randomOpponent;
     }
 
     public void doAttack(Attack attack, Javamon target, Combatant combatant) {
