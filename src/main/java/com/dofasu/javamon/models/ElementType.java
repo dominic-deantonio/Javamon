@@ -1,5 +1,6 @@
 package com.dofasu.javamon.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,16 @@ public enum ElementType {
 
     // TODO: Create type effectiveness
     public double getEffectiveness(ElementType otherType) {
-        Map<ElementType, List<ElementType>> effectiveAgainstGrass = new HashMap<>();
-
-
-        return 1.5;
+        
     }
 
+    public String getEffectivenessString(ElementType otherType){
+        Map<Double, String> effectiveness = new HashMap<>();
+        effectiveness.put(.5, "It's not very effective");
+        effectiveness.put(1.0, "It's effective");
+        effectiveness.put(1.5, "It's super effective");
 
+        double e = getEffectiveness(otherType);
+        return effectiveness.get(e);
+    }
 }
