@@ -1,9 +1,6 @@
 package com.dofasu.javamon.models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public enum ElementType {
     FIRE, WATER, GRASS, ELECTRIC, GROUND, NORMAL, FLYING, ROCK;
@@ -40,10 +37,11 @@ public enum ElementType {
 
     // TODO: Create type effectiveness
     public double getEffectiveness(ElementType otherType) {
-
+        List<ElementType> elements = Arrays.asList(ROCK);
+        return 2;
     }
 
-    public String getEffectivenessString(ElementType otherType){
+    public String getEffectivenessString(ElementType otherType) {
         Map<Double, String> effectiveness = new HashMap<>();
         effectiveness.put(.5, "It's not very effective");
         effectiveness.put(1.0, "It's effective");

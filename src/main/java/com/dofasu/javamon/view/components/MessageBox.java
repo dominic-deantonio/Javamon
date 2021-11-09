@@ -13,9 +13,7 @@ import javafx.scene.text.Text;
 public class MessageBox extends StackPane {
     final Controller controller = Controller.getInstance();
     private final Text messageText = new Text("Select an attack");
-    private final StandardButton nextButton = new StandardButton("Next", e -> {
-        controller.next(null);
-    });
+    private final StandardButton nextButton = new StandardButton("Next", e -> controller.nextStep(null));
 
     public MessageBox() {
         Rectangle box = new Rectangle(800, 100, Color.WHITESMOKE);
