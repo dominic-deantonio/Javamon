@@ -46,7 +46,6 @@ public class Controller {
         this.player = player;
 
         // TODO: Select opponent Javamon randomly instead of hardcoding. Consider disallowing same Javamon as player
-        this.opponent = getJavamonList().get(1);
 
         goTo(scene, new BattleView(scene));
     }
