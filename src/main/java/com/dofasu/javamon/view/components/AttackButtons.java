@@ -23,7 +23,7 @@ public class AttackButtons extends VBox {
             for (int y = 0; y < 2; y++) {
                 Attack attack = attacks.get(index);
                 AttackButton button = new AttackButton(attack, (e) -> {
-                    controller.next(attack);
+                    controller.nextStep(attack);
                 });
                 buttons.add(button);
                 row.getChildren().add(button);

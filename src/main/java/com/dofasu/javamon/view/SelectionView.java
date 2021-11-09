@@ -56,7 +56,7 @@ public class SelectionView extends VBox {
                 new StandardButton("Start Battle!", startBattle)
         );
 
-        setBackground(getBackgroundImage());
+        setBackground(controller.getBackgroundImage("/background1.png"));
     }
 
     private Node getImageAndType() {
@@ -86,8 +86,7 @@ public class SelectionView extends VBox {
     }
 
     final private ChangeListener<Number> selectJavamon = (observable, oldValue, newValue) -> {
-        List<Javamon> javamonList = new ArrayList<>(controller.getJavamonList());
-        selectedMon = javamonList.get(newValue.intValue());
+        selectedMon = controller.getJavamonList().get(newValue.intValue());
         selectedMonImage.setImage(Images.getImage(selectedMon.getImageUrl()));
         selectedMonTypeLabel.updateType(selectedMon.getType());
     };
@@ -96,9 +95,5 @@ public class SelectionView extends VBox {
         controller.startBattle(this.getScene(), selectedMon);
     };
 
-    private Background getBackgroundImage() {
-        Image image = new Image("/background1.png", true);
-        BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1, 1, true, true, false, false));
-        return new Background(bgImage);
-    }
+
 }
