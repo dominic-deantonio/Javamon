@@ -1,11 +1,11 @@
 package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.controller.Controller;
-import com.dofasu.javamon.view.components.*;
+import com.dofasu.javamon.view.component.Combatant;
+import com.dofasu.javamon.view.component.MessageBox;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class BattleView extends VBox {

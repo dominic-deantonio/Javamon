@@ -1,4 +1,4 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;

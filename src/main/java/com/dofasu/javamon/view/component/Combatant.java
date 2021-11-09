@@ -1,8 +1,7 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
-import com.dofasu.javamon.controller.Images;
-import com.dofasu.javamon.models.Javamon;
-import javafx.geometry.Pos;
+import com.dofasu.javamon.controller.Controller;
+import com.dofasu.javamon.model.Javamon;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,7 +20,7 @@ public class Combatant extends HBox {
         super();
         this.javamon = javamon;
         final CombatantInfo info = new CombatantInfo();
-        ImageView image = Images.getImageView(javamon.getImageUrl());
+        ImageView image = Controller.getInstance().getImageView(javamon.getImageUrl());
         attackButtons = new AttackButtons(javamon.getAttacks());
         if (isPlayer) {
             image.setScaleX(-1);

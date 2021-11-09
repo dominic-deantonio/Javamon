@@ -1,4 +1,4 @@
-package com.dofasu.javamon.models;
+package com.dofasu.javamon.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

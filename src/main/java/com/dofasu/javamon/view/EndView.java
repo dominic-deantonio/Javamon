@@ -1,10 +1,9 @@
 package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.controller.Controller;
-import com.dofasu.javamon.controller.Images;
-import com.dofasu.javamon.models.Javamon;
-import com.dofasu.javamon.view.components.Container;
-import com.dofasu.javamon.view.components.StandardButton;
+import com.dofasu.javamon.model.Javamon;
+import com.dofasu.javamon.view.component.Container;
+import com.dofasu.javamon.view.component.StandardButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -29,7 +28,7 @@ public class EndView extends VBox {
 
         Javamon winner = playerWins ? controller.getPlayer() : controller.getOpponent();
 
-        ImageView winnerImage = Images.getImageView(winner.getImageUrl());
+        ImageView winnerImage = controller.getImageView(winner.getImageUrl());
         winnerImage.setFitHeight(350);
 
         setStyle("-fx-font-family: 'sans-serif'");

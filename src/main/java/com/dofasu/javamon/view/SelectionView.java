@@ -1,12 +1,11 @@
 package com.dofasu.javamon.view;
 
 import com.dofasu.javamon.controller.Controller;
-import com.dofasu.javamon.controller.Images;
-import com.dofasu.javamon.models.ElementType;
-import com.dofasu.javamon.models.Javamon;
-import com.dofasu.javamon.view.components.Container;
-import com.dofasu.javamon.view.components.StandardButton;
-import com.dofasu.javamon.view.components.ElementTypeButton;
+import com.dofasu.javamon.model.ElementType;
+import com.dofasu.javamon.model.Javamon;
+import com.dofasu.javamon.view.component.Container;
+import com.dofasu.javamon.view.component.ElementTypeButton;
+import com.dofasu.javamon.view.component.StandardButton;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,17 +14,15 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SelectionView extends VBox {
     Controller controller = Controller.getInstance();
@@ -68,8 +65,6 @@ public class SelectionView extends VBox {
         column.setAlignment(Pos.CENTER);
         column.setSpacing(100);
 
-
-
         return new Container(400, 500,  column, .4);
     }
 
@@ -87,7 +82,7 @@ public class SelectionView extends VBox {
 
     final private ChangeListener<Number> selectJavamon = (observable, oldValue, newValue) -> {
         selectedMon = controller.getJavamonList().get(newValue.intValue());
-        selectedMonImage.setImage(Images.getImage(selectedMon.getImageUrl()));
+        selectedMonImage.setImage(controller.getImage(selectedMon.getImageUrl()));
         selectedMonTypeLabel.updateType(selectedMon.getType());
     };
 
