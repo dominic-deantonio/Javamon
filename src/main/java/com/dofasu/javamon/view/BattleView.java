@@ -31,13 +31,6 @@ public class BattleView extends VBox {
                 player,
                 messageBox
         );
-        setBackground(getBackgroundImage());
-    }
-
-    // TODO move this method into controller?
-    private Background getBackgroundImage() {
-        Image image = new Image("/background3.png", true);
-        BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1, 1, true, true, false, false));
-        return new Background(bgImage);
+        setBackground(controller.getBackgroundImage("/background3.png"));
     }
 }

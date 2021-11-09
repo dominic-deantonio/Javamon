@@ -7,7 +7,8 @@ import com.dofasu.javamon.view.EndView;
 import com.dofasu.javamon.view.components.Combatant;
 import com.dofasu.javamon.view.components.MessageBox;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 import java.util.List;
 import java.util.Random;
@@ -15,7 +16,7 @@ import java.util.Random;
 public class Controller {
 
     enum BattleStatus {
-        PLAYER_ATTACK_START, PLAYER_ATTACK_END, OPPONENT_ATTACK_START, OPPONENT_ATTACK_END
+        PLAYER_ATTACK_START, PLAYER_ATTACK_END, OPPONENT_ATTACK_START, OPPONENT_ATTACK_END, GAME_OVER
     }
 
     private static final Controller instance = new Controller();
@@ -23,10 +24,6 @@ public class Controller {
     // Prevent instantiation (uses Singleton pattern)
     private Controller() {
         buildJavamonList();
-    }
-
-    public static Controller getInstance() {
-        return instance;
     }
 
     // Fields
@@ -43,35 +40,30 @@ public class Controller {
     }
 
     public void startBattle(Scene scene, Javamon player) {
-        // Assign player and random opponent
-        this.player = player;
-        // DONE: Select opponent Javamon randomly instead of hardcoding. Consider disallowing same Javamon as player
-        assignRandomOpponent();
-
+        setPlayer(player);
+        setOpponent(getRandomOpponent());
         goTo(scene, new BattleView(scene));
     }
 
-    private void assignRandomOpponent() {
-        // Generate random opponent different than the player itself. Streams??
-        int maxIndex = (javamonList.size()-1);
+    private Javamon getRandomOpponent() {
+        int maxIndex = getJavamonList().size() - 1;
         Javamon randomOpponent = getJavamonList().get(getRandomNumberBetween(0, maxIndex));
         while (randomOpponent.equals(getPlayer())) {
             randomOpponent = getJavamonList().get(getRandomNumberBetween(0, maxIndex));
         }
-        this.opponent = randomOpponent;
+        return randomOpponent;
     }
 
     public void doAttack(Attack attack, Javamon target, Combatant combatant) {
         double damage = calculateDamage(attack, target);
         target.decreaseHealth(damage);
         combatant.updateHealthBar();
-        checkGameOver();
     }
 
-    public void next(Attack attack) {
+    public void nextStep(Attack attack) {
         switch (status) {
             case OPPONENT_ATTACK_END:
-                messageBox.updateMessage(player.getName() + " used " + attack.getName());
+                messageBox.updateMessage(getPlayer().getName() + " used " + attack.getName());
                 status = BattleStatus.PLAYER_ATTACK_START;
                 messageBox.disableButton(false);
                 playerCombatant.disableAttackButtons(true);
@@ -79,34 +71,42 @@ public class Controller {
                 break;
             case PLAYER_ATTACK_START:
                 if (didHit(nextAttack)) {
-                    doAttack(nextAttack, opponent, opponentCombatant);
-                    messageBox.updateMessage(getEffectivenessString(attack, opponent));
+                    doAttack(nextAttack, getOpponent(), opponentCombatant);
+                    messageBox.updateMessage(getEffectivenessString(attack, getOpponent()));
+
                 } else {
-                    messageBox.updateMessage(player.getName() + " missed");
+                    messageBox.updateMessage(getPlayer().getName() + " missed");
                 }
                 status = BattleStatus.PLAYER_ATTACK_END;
                 messageBox.disableButton(false);
                 playerCombatant.disableAttackButtons(true);
+                nextAttack = getRandomAttack(getOpponent());
+                checkGameOver();
                 break;
             case PLAYER_ATTACK_END:
-                playerCombatant.disableAttackButtons(true);
-                nextAttack = getRandomAttack(opponent);
-                messageBox.updateMessage(opponent.getName() + " used " + nextAttack.getName());
+                messageBox.updateMessage(getOpponent().getName() + " used " + nextAttack.getName());
                 status = BattleStatus.OPPONENT_ATTACK_START;
+                playerCombatant.disableAttackButtons(true);
                 messageBox.disableButton(false);
                 break;
             case OPPONENT_ATTACK_START:
                 if (didHit(nextAttack)) {
-                    doAttack(nextAttack, player, playerCombatant);
-                    messageBox.updateMessage(getEffectivenessString(attack, player));
+                    doAttack(nextAttack, getPlayer(), playerCombatant);
+                    messageBox.updateMessage(getEffectivenessString(attack, getPlayer()));
+
                 } else {
-                    messageBox.updateMessage(opponent.getName() + " missed");
+                    messageBox.updateMessage(getOpponent().getName() + " missed");
                 }
 
                 messageBox.disableButton(true);
                 playerCombatant.disableAttackButtons(false);
                 status = BattleStatus.OPPONENT_ATTACK_END;
+                checkGameOver();
                 break;
+            case GAME_OVER:
+                boolean userDidWin = getOpponent().equals(getLoser());
+                goTo(scene, new EndView(userDidWin));
+                status = BattleStatus.OPPONENT_ATTACK_END;
             default:
                 messageBox.updateMessage("No current status");
         }
@@ -117,8 +117,8 @@ public class Controller {
         return attacker.getAttacks().get(attackIndex);
     }
 
-    private double calculateDamage(Attack attack, Javamon javamon) {
-        double effectiveness = javamon.getType().getEffectiveness(attack.getType());
+    private double calculateDamage(Attack attack, Javamon defender) {
+        double effectiveness = defender.getType().getEffectiveness(attack.getType());
         return attack.getStrength() * effectiveness * 0.2;
     }
 
@@ -128,9 +128,22 @@ public class Controller {
     }
 
     private void checkGameOver() {
-        if (opponent.getHealth() <= 0 || player.getHealth() <= 0) {
-            goTo(scene, new EndView());
-            status = BattleStatus.OPPONENT_ATTACK_END;
+        Javamon loser = getLoser();
+        if (loser != null) {
+            messageBox.updateMessage(loser.getName() + " fainted!");
+            status = BattleStatus.GAME_OVER;
+            playerCombatant.disableAttackButtons(true);
+            messageBox.disableButton(false);
+        }
+    }
+
+    private Javamon getLoser() {
+        if (getOpponent().getHealth() <= 0) {
+            return getOpponent();
+        } else if (getPlayer().getHealth() <= 0) {
+            return getPlayer();
+        } else {
+            return null;
         }
     }
 
@@ -164,7 +177,26 @@ public class Controller {
         return this.opponent;
     }
 
+    public void setOpponent(Javamon opponent) {
+        this.opponent = opponent;
+    }
+
     public Javamon getPlayer() {
         return player;
+    }
+
+    public void setPlayer(Javamon player) {
+        this.player = player;
+    }
+
+    public static Controller getInstance() {
+        return instance;
+    }
+
+    public Background getBackgroundImage(String path) {
+        Image image = new Image(path, true);
+        BackgroundSize size = new BackgroundSize(1, 1, true, true, false, false);
+        BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, size);
+        return new Background(bgImage);
     }
 }
