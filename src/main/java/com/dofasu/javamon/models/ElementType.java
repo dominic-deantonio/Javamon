@@ -4,9 +4,12 @@ import java.util.*;
 
 public enum ElementType {
     FIRE, WATER, GRASS, ELECTRIC, GROUND, NORMAL, FLYING, ROCK;
-//    GHOST, DARK, DRAGON, STEEL, FAIRY, ICE, FIGHTING, POISON, PSYCHIC, BUG,;
+
 
     private static Map<ElementType, String> fxColors = buildColors();
+    private static Map<ElementType, List<ElementType>> mostEffective = buildMostEffective();
+    private static Map<ElementType, List<ElementType>> lessEffective = buildLessEffective();
+
 
     public String getHexColor() {
         return fxColors.get(this);
@@ -22,32 +25,60 @@ public enum ElementType {
         output.put(NORMAL, "#CAC6B5");
         output.put(FLYING, "#D5C3ED");
         output.put(GROUND, "#B6AD82");
-//        output.put(ICE, "#9BE1E0");
-//        output.put(FIGHTING, "#764230");
-//        output.put(POISON, "#792A9C");
-//        output.put(PSYCHIC, "#BA22C7");
-//        output.put(BUG, "#95AB3A");
-//        output.put(GHOST, "#64507A");
-//        output.put(DARK, "#494339");
-//        output.put(DRAGON, "#6722D1");
-//        output.put(STEEL, "#9D9D9D");
-//        output.put(FAIRY, "#E98BC4");
         return output;
+    }
+
+
+    private static Map<ElementType, List<ElementType>> buildMostEffective() {
+        Map<ElementType, List<ElementType>> lessEffective = new HashMap<>();
+        //Normal types excluded
+        lessEffective.put(FIRE, Arrays.asList(WATER, ROCK));
+        lessEffective.put(WATER, Arrays.asList(GRASS, ELECTRIC));
+        lessEffective.put(GRASS, Arrays.asList(FLYING, FIRE));
+        lessEffective.put(ELECTRIC, Arrays.asList(GROUND));
+        lessEffective.put(GROUND, Arrays.asList(WATER, GRASS));
+        lessEffective.put(FLYING, Arrays.asList(ROCK, ELECTRIC));
+        lessEffective.put(ROCK, Arrays.asList(WATER, GRASS, GROUND));
+
+        return lessEffective;
+    }
+
+    private static Map<ElementType, List<ElementType>> buildLessEffective() {
+        Map<ElementType, List<ElementType>> moreEffective = new HashMap<>();
+        //Normal types excluded
+        moreEffective.put(FIRE, Arrays.asList(GRASS));
+        moreEffective.put(WATER, Arrays.asList(FIRE));
+        moreEffective.put(GRASS, Arrays.asList(GROUND, WATER, ELECTRIC));
+        moreEffective.put(ELECTRIC, Arrays.asList(FLYING));
+        moreEffective.put(GROUND, Arrays.asList(ROCK));
+        moreEffective.put(FLYING, Arrays.asList(GRASS));
+        moreEffective.put(ROCK, Arrays.asList(FLYING, FIRE));
+
+
+        return moreEffective;
     }
 
     // TODO: Create type effectiveness
     public double getEffectiveness(ElementType otherType) {
-        List<ElementType> elements = Arrays.asList(ROCK);
-        return 2;
+        List<ElementType> strongAgainst = mostEffective.get(this);
+        if (strongAgainst.contains(otherType)) {
+            return 1.5;
+        }
+
+        List<ElementType> weakAgainst = lessEffective.get(this);
+        if(weakAgainst.contains(otherType)){
+            return 0.5;
+        }
+
+        return 1.0;
     }
 
-    public String getEffectivenessString(ElementType otherType) {
+    public String getEffectivenessString(double multiplier) {
         Map<Double, String> effectiveness = new HashMap<>();
         effectiveness.put(.5, "It's not very effective");
         effectiveness.put(1.0, "It's effective");
         effectiveness.put(1.5, "It's super effective");
 
-        double e = getEffectiveness(otherType);
-        return effectiveness.get(e);
+        return effectiveness.get(multiplier);
     }
 }
