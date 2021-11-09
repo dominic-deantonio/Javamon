@@ -1,6 +1,7 @@
 package com.dofasu.javamon.controller;
 
 import com.dofasu.javamon.models.Attack;
+import com.dofasu.javamon.models.ElementType;
 import com.dofasu.javamon.models.Javamon;
 import com.dofasu.javamon.view.BattleView;
 import com.dofasu.javamon.view.EndView;
@@ -72,8 +73,9 @@ public class Controller {
             case PLAYER_ATTACK_START:
                 if (didHit(nextAttack)) {
                     doAttack(nextAttack, getOpponent(), opponentCombatant);
-                    messageBox.updateMessage(getEffectivenessString(attack, getOpponent()));
-
+                    ElementType opponentType = getOpponent().getType();
+                    String effectivenessString =  opponentType.getEffectivenessString(nextAttack.getType());
+                    messageBox.updateMessage(effectivenessString);
                 } else {
                     messageBox.updateMessage(getPlayer().getName() + " missed");
                 }
@@ -92,8 +94,9 @@ public class Controller {
             case OPPONENT_ATTACK_START:
                 if (didHit(nextAttack)) {
                     doAttack(nextAttack, getPlayer(), playerCombatant);
-                    messageBox.updateMessage(getEffectivenessString(attack, getPlayer()));
-
+                    ElementType playerType = getPlayer().getType();
+                    String effectivenessString = playerType.getEffectivenessString(nextAttack.getType());
+                    messageBox.updateMessage(effectivenessString);
                 } else {
                     messageBox.updateMessage(getOpponent().getName() + " missed");
                 }
@@ -119,12 +122,7 @@ public class Controller {
 
     private double calculateDamage(Attack attack, Javamon defender) {
         double effectiveness = defender.getType().getEffectiveness(attack.getType());
-        return attack.getStrength() * effectiveness * 0.2;
-    }
-
-    private String getEffectivenessString(Attack attack, Javamon javamon) {
-        // TODO: Need a method to get the actual string
-        return "It's super effective (not really)!";
+        return attack.getStrength() * effectiveness * 0.3;
     }
 
     private void checkGameOver() {

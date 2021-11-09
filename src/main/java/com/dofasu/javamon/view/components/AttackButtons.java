@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+// TODO: Rename this package to be plural-consistent with other packages
 public class AttackButtons extends VBox {
 
     private Controller controller = Controller.getInstance();
@@ -33,11 +33,6 @@ public class AttackButtons extends VBox {
             getChildren().add(row);
         }
         setSpacing(5);
-    }
-
-    private void disableButtons(boolean isDisabled) {
-        for (AttackButton b : buttons)
-            b.setDisable(isDisabled);
     }
 
     private class AttackButton extends ElementButton {
