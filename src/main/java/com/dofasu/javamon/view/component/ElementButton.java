@@ -1,6 +1,6 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
-import com.dofasu.javamon.models.ElementType;
+import com.dofasu.javamon.model.ElementType;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 

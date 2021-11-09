@@ -1,6 +1,9 @@
-package com.dofasu.javamon.models;
+package com.dofasu.javamon.model;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public enum ElementType {
     FIRE, WATER, GRASS, ELECTRIC, GROUND, NORMAL, FLYING, ROCK;

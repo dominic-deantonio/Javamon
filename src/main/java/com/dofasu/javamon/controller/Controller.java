@@ -1,14 +1,15 @@
 package com.dofasu.javamon.controller;
 
-import com.dofasu.javamon.models.Attack;
-import com.dofasu.javamon.models.ElementType;
-import com.dofasu.javamon.models.Javamon;
+import com.dofasu.javamon.model.Attack;
+import com.dofasu.javamon.model.ElementType;
+import com.dofasu.javamon.model.Javamon;
 import com.dofasu.javamon.view.BattleView;
 import com.dofasu.javamon.view.EndView;
-import com.dofasu.javamon.view.components.Combatant;
-import com.dofasu.javamon.view.components.MessageBox;
+import com.dofasu.javamon.view.component.Combatant;
+import com.dofasu.javamon.view.component.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.List;
@@ -196,5 +197,17 @@ public class Controller {
         BackgroundSize size = new BackgroundSize(1, 1, true, true, false, false);
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, size);
         return new Background(bgImage);
+    }
+
+    public ImageView getImageView(String path) {
+        ImageView iv = new ImageView(path);
+        iv.setPreserveRatio(true);
+        iv.setFitHeight(250);
+        return iv;
+    }
+
+
+    public Image getImage(String imageUrl) {
+        return new Image(imageUrl);
     }
 }

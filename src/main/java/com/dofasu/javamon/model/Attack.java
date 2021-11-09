@@ -1,7 +1,4 @@
-package com.dofasu.javamon.models;
-
-import com.dofasu.javamon.models.ElementType;
-import com.dofasu.javamon.models.Javamon;
+package com.dofasu.javamon.model;
 
 public class Attack {
 

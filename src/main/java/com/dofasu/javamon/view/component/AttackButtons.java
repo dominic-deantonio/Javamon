@@ -1,7 +1,7 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
-import com.dofasu.javamon.models.Attack;
 import com.dofasu.javamon.controller.Controller;
+import com.dofasu.javamon.model.Attack;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.HBox;
@@ -10,7 +10,6 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-// TODO: Rename this package to be plural-consistent with other packages
 public class AttackButtons extends VBox {
 
     private Controller controller = Controller.getInstance();

@@ -1,4 +1,4 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
 import com.dofasu.javamon.controller.Controller;
 import javafx.geometry.Pos;

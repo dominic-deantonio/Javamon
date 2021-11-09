@@ -1,15 +1,14 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
-import com.dofasu.javamon.models.Constants;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.event.EventHandler;
 
 public class StandardButton extends Button {
     public StandardButton(String label, EventHandler<ActionEvent> eventHandler) {
         super(label);
-        setStyle(Constants.BUTTON_COLOR);
+        setStyle("-fx-base: #33B8FF");
         setPrefWidth(200);
         setTextFill(Color.WHITE);
         setOnAction(eventHandler);

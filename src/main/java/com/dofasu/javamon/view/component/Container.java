@@ -1,4 +1,4 @@
-package com.dofasu.javamon.view.components;
+package com.dofasu.javamon.view.component;
 
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
