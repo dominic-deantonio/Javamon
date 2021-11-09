@@ -40,7 +40,7 @@ public enum ElementType {
 
     // TODO: Create type effectiveness
     public double getEffectiveness(ElementType otherType) {
-        
+
     }
 
     public String getEffectivenessString(ElementType otherType){
