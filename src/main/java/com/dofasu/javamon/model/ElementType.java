@@ -41,7 +41,7 @@ public enum ElementType {
         lessEffective.put(FIRE, Arrays.asList(WATER, ROCK));
         lessEffective.put(WATER, Arrays.asList(GRASS, ELECTRIC));
         lessEffective.put(GRASS, Arrays.asList(FLYING, FIRE));
-        lessEffective.put(ELECTRIC, Arrays.asList(GROUND));
+        lessEffective.put(ELECTRIC, Arrays.asList(GROUND, ROCK));
         lessEffective.put(GROUND, Arrays.asList(WATER, GRASS));
         lessEffective.put(FLYING, Arrays.asList(ROCK, ELECTRIC));
         lessEffective.put(ROCK, Arrays.asList(WATER, GRASS, GROUND));
@@ -58,7 +58,7 @@ public enum ElementType {
         moreEffective.put(ELECTRIC, Arrays.asList(FLYING));
         moreEffective.put(GROUND, Arrays.asList(ROCK));
         moreEffective.put(FLYING, Arrays.asList(GRASS));
-        moreEffective.put(ROCK, Arrays.asList(FLYING, FIRE));
+        moreEffective.put(ROCK, Arrays.asList(FLYING, FIRE, ELECTRIC));
         moreEffective.put(NORMAL, Arrays.asList());
 
         return moreEffective;

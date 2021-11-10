@@ -41,10 +41,18 @@ public class Javamon {
         return imageUrl;
     }
 
-    public void decreaseHealth(double damage) {
-        double newHealth = getHealth() - damage;
-        if (newHealth < 0) newHealth = 0;
-        setHealth(newHealth);
+    public double decreaseHealth(double damage) throws NullPointerException {
+        double newHealth = 0;
+        try {
+            newHealth = getHealth() - damage;
+            if (newHealth < 0) newHealth = 0;
+            setHealth(newHealth);
+            return newHealth;
+        }
+        catch (Exception e){
+
+        }
+        return newHealth;
     }
 
     public static List<Javamon> buildList() {

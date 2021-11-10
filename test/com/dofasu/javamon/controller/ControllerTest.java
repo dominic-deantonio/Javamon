@@ -28,7 +28,7 @@ public class ControllerTest {
 
 
     @Test
-    public void getRandomOpponent_shouldReturndiffentJavaMonthanPlayer_WhenRandomOpponent() {
+    public void getRandomOpponent_shouldReturnDifferentJavamonThanPlayer_WhenRandomOpponent() {
          controller.setPlayer(javamonPlayer);
         //System.out.println(controller.getRandomOpponent().getName());
         //System.out.println(controller.getPlayer().getName());
@@ -46,7 +46,7 @@ public class ControllerTest {
 
     @Test //TODO
     //formula of Effectiveness = attack.getStrength() * effectiveness * 0.3
-    public void calculateDamage_shouldbeTimesandHalf_whenMoreEffective() {
+    public void calculateDamage_shouldBeTimesAndHalf_whenMoreEffective() {
         Attack attack = new Attack("Sand Attack", ElementType.GROUND, 60, 80);
         assertEquals(27.0, controller.calculateDamage(attack,javamonPlayer),.001);
 
@@ -54,7 +54,7 @@ public class ControllerTest {
 
     @Test //TODO
     //formula of Effectiveness = attack.getStrength() * effectiveness * 0.3
-    public void calculateDamage_shouldbehalf_whenLessEffective() {
+    public void calculateDamage_shouldBeHalf_whenLessEffective() {
         Attack attack = new Attack("Air Slash", ElementType.FLYING, 80, 80);
         assertEquals(12.0, controller.calculateDamage(attack,javamonPlayer),.001);
 

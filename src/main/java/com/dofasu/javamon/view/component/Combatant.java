@@ -10,11 +10,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * Combatant creates the combatants in the game - the player's Javamon and the opponent's Javamon
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class Combatant extends HBox {
 
     private final Javamon javamon;
     private final HealthBar healthBar = new HealthBar();
     private final AttackButtons attackButtons;
+
+    /**
+     * Creates the Javamon avatar and placement in the battle scene
+     * @param javamon provides the image of the javamon
+     * @param isPlayer if the Javamon belongs to the player, then the Javamon will be flipped 180 degrees
+     *                 in the battle scene
+     */
 
     public Combatant(Javamon javamon, boolean isPlayer) {
         super();
@@ -33,7 +46,18 @@ public class Combatant extends HBox {
         setSpacing(150);
     }
 
+    /**
+     * CombatantInfo contains the information of the Javamon
+     * @author DOFASU
+     * @version 1.0
+     */
+
     class CombatantInfo extends VBox {
+
+        /**
+         * Creates the information of the Javamon to include the name, type, and how much HP
+         * the Javamon has.
+         */
 
         CombatantInfo() {
             super();
@@ -47,9 +71,17 @@ public class Combatant extends HBox {
         }
     }
 
+    /**
+     * Updates the health bar of the javamons
+     */
+
     public void updateHealthBar() {
         healthBar.setHp(javamon.getHealth());
     }
+
+    /**
+     * Disables the attack button choices
+     */
 
     public void disableAttackButtons(boolean isDisabled) {
         attackButtons.setDisable(isDisabled);

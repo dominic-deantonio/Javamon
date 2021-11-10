@@ -4,6 +4,13 @@ import com.dofasu.javamon.model.ElementType;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
+
+/**
+ * ElementButton
+ * @author DOFASU
+ * @version 1.0
+ */
+
 abstract class ElementButton extends Button {
     ElementType type;
 

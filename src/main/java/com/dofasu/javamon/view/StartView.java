@@ -12,9 +12,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * StartView creates the first menu in the Javamon game
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class StartView extends VBox {
 
     Controller controller = Controller.getInstance();
+
+    /**
+     * Registers the GUI to display the starting screen. The background displays a blue sky and clouds.
+     * The start button is in the center. Clicking on the start button allows the player to proceed to the game.
+     */
 
     public StartView() {
         super(5);

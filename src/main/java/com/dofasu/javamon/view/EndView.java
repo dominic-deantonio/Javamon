@@ -14,9 +14,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * EndView creates the end scene of the winner,
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class EndView extends VBox {
 
     Controller controller = Controller.getInstance();
+
+    /**
+     * Registers the GUI to display the Javamon that won. The background displays a blue sky and clouds.
+     * Displays the picture of the Javamon that won in the center with the message either You win or You lose.
+     * @param playerWins the winner to display.
+     */
 
     public EndView(Boolean playerWins) {
         super(5);

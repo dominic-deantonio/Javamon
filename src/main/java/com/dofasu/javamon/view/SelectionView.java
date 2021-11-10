@@ -24,11 +24,26 @@ import javafx.scene.text.Text;
 
 import java.util.Collection;
 
+/**
+ * SelectionView creates screen where the player selects
+ * their Javamon
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class SelectionView extends VBox {
     Controller controller = Controller.getInstance();
     Javamon selectedMon;
     ImageView selectedMonImage = new ImageView();
     ElementTypeButton selectedMonTypeLabel = new ElementTypeButton(ElementType.ELECTRIC);
+
+    /**
+     * Registers the GUI to display the all the Javamon the player is able to select. The background
+     * is a blue sky with clouds. The picture of the Javamon is on the right hand side of the screen.
+     * The list of Javamon the player is able to select is on the left hand side of the screen.
+     * Clicking on the name of the Javamon allows the player to select the Javamon. Also provides the
+     * type of the Javamon
+     */
 
     public SelectionView() {
         super(5);
