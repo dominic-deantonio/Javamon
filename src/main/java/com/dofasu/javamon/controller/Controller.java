@@ -47,7 +47,7 @@ public class Controller {
         goTo(scene, new BattleView(scene));
     }
 
-    private Javamon getRandomOpponent() {
+    Javamon getRandomOpponent() {
         int maxIndex = getJavamonList().size() - 1;
         Javamon randomOpponent = getJavamonList().get(getRandomNumberBetween(0, maxIndex));
         while (randomOpponent.equals(getPlayer())) {
@@ -75,7 +75,7 @@ public class Controller {
                 if (didHit(nextAttack)) {
                     doAttack(nextAttack, getOpponent(), opponentCombatant);
                     ElementType opponentType = getOpponent().getType();
-                    String effectivenessString =  opponentType.getEffectivenessString(nextAttack.getType());
+                    String effectivenessString = opponentType.getEffectivenessString(nextAttack.getType());
                     messageBox.updateMessage(effectivenessString);
                 } else {
                     messageBox.updateMessage(getPlayer().getName() + " missed");
@@ -121,7 +121,7 @@ public class Controller {
         return attacker.getAttacks().get(attackIndex);
     }
 
-    private double calculateDamage(Attack attack, Javamon defender) {
+    double calculateDamage(Attack attack, Javamon defender) {
         double effectiveness = defender.getType().getEffectiveness(attack.getType());
         return attack.getStrength() * effectiveness * 0.3;
     }
