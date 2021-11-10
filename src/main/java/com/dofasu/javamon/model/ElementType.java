@@ -13,6 +13,10 @@ public enum ElementType {
     private static Map<ElementType, List<ElementType>> mostEffective = buildMostEffective();
     private static Map<ElementType, List<ElementType>> lessEffective = buildLessEffective();
 
+    private static final double SUPER_EFFECTIVE_MULTIPLIER = 1.5;
+    private static final double LESS_EFFECTIVE_MULTIPLIER = 0.5;
+    private static final double SAME_MULTIPLIER = 1.0;
+
 
     public String getHexColor() {
         return fxColors.get(this);
@@ -63,22 +67,22 @@ public enum ElementType {
     public double getEffectiveness(ElementType otherType) {
         List<ElementType> strongAgainst = mostEffective.get(this);
         if (strongAgainst.contains(otherType)) {
-            return 0.5;
+            return LESS_EFFECTIVE_MULTIPLIER;
         }
 
         List<ElementType> weakAgainst = lessEffective.get(this);
         if (weakAgainst.contains(otherType)) {
-            return 1.5;
+            return SUPER_EFFECTIVE_MULTIPLIER;
         }
 
-        return 1.0;
+        return SAME_MULTIPLIER;
     }
 
     public String getEffectivenessString(ElementType otherType) {
         Map<Double, String> effectiveness = new HashMap<>();
-        effectiveness.put(0.5, "It's not very effective");
-        effectiveness.put(1.0, "It's effective");
-        effectiveness.put(1.5, "It's super effective");
+        effectiveness.put(LESS_EFFECTIVE_MULTIPLIER, "It's not very effective");
+        effectiveness.put(SAME_MULTIPLIER, "It's effective");
+        effectiveness.put(SUPER_EFFECTIVE_MULTIPLIER, "It's super effective");
         double multiplier = getEffectiveness(otherType);
         return effectiveness.get(multiplier);
     }
