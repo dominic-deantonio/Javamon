@@ -10,10 +10,23 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+/**
+ * AttackButtons creates the attack buttons for the player
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class AttackButtons extends VBox {
 
     private Controller controller = Controller.getInstance();
     private Collection<AttackButton> buttons = new ArrayList<>();
+
+    /**
+     * Registers the functionality of the buttons for attack. If the player clicks on the four
+     * attack options, the Javamon will attack using the chosen attack.
+     * @param attacks the list of attacks available to select.
+     */
 
     public AttackButtons(List<Attack> attacks) {
         int index = 0;

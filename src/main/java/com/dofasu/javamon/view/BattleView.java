@@ -8,12 +8,29 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * BattleView creates the battle setting for the player's Javamon
+ * the opponent's Javamon
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class BattleView extends VBox {
 
     Controller controller = Controller.getInstance();
     Combatant player;
     Combatant opponent;
     MessageBox messageBox = new MessageBox();
+
+
+    /**
+     * Registers the GUI to display the battle background. The background displays a forest and grass.
+     * The opponent is on the top right hand corner and the player is on the bottom right hand corner.
+     * Clicking on the buttons allows the player to choose
+     * their attacks. After selecting the attack, the player will click on the next button
+     * and wait for the opponent to make their move.
+     * @param scene the background to display.
+     */
 
     public BattleView(Scene scene) {
         super(5);

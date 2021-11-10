@@ -9,12 +9,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * HealthBar is used to represent how much health the Javamon has during the battle
+ * @author DOFASU
+ * @version 1.0
+ */
+
 public class HealthBar extends HBox {
 
     int currentHp = 100;
     final double maxHp = 100;
     Text hpLabel = new Text("100 HP");
     StackedBar bar = new StackedBar();
+
+    /**
+     * Registers the bar that holds the health of the Javamon
+     */
 
     public HealthBar() {
         hpLabel.setFont(Font.font("Monospace", FontWeight.BOLD, 20));
