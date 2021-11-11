@@ -15,6 +15,11 @@ import javafx.scene.layout.*;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Main Controller class
+ * @author DOFASU
+ * @version 1.0
+ */
 public class Controller {
 
     enum BattleStatus {
@@ -37,15 +42,28 @@ public class Controller {
     private BattleStatus status = BattleStatus.OPPONENT_ATTACK_END;
     private Attack nextAttack;
 
+    //returns list of Javamon
+
     public List<Javamon> getJavamonList() {
         return javamonList;
     }
+
+    /**
+     * Starts the battle
+     * @param scene - content of Scene graph
+     * @param player - current player
+     */
 
     public void startBattle(Scene scene, Javamon player) {
         setPlayer(player);
         setOpponent(getRandomOpponent());
         goTo(scene, new BattleView(scene));
     }
+
+    /**
+     * selects random Javamon to battle with
+     * @return random opponent other than the Javamon player selected
+     */
 
     Javamon getRandomOpponent() {
         int maxIndex = getJavamonList().size() - 1;
@@ -56,12 +74,21 @@ public class Controller {
         return randomOpponent;
     }
 
+    /**
+     * Attacks the opponent
+     * @see #nextStep(Attack)
+     */
+
     public void doAttack(Attack attack, Javamon target, Combatant combatant) {
         double damage = calculateDamage(attack, target);
         target.decreaseHealth(damage);
         combatant.updateHealthBar();
     }
 
+    /**
+     * Both Javamon attacks each other one at a time
+     * @param attack gets attack type to attack opponents
+     */
     public void nextStep(Attack attack) {
         switch (status) {
             case OPPONENT_ATTACK_END:
@@ -116,10 +143,23 @@ public class Controller {
         }
     }
 
-    private Attack getRandomAttack(Javamon attacker) {
+    /**
+     * Gets randomly selected attack based on Javamon type
+     * @param attacker - javamon currently attacking
+     * @return randomly selected attack
+     */
+
+    Attack getRandomAttack(Javamon attacker) {
         int attackIndex = getRandomNumberBetween(0, 3);
         return attacker.getAttacks().get(attackIndex);
     }
+
+    /**
+     * Calculates the damage
+     * @param attack attack type
+     * @param defender can be player or opponent currently defending
+     * @return Total damage done in one attack
+     */
 
     double calculateDamage(Attack attack, Javamon defender) {
         double effectiveness = defender.getType().getEffectiveness(attack.getType());
