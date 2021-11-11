@@ -10,6 +10,7 @@ public class Javamon {
     private final ElementType type;
     private double health = 100.0;
 
+
     public ElementType getType() {
         return type;
     }
@@ -24,6 +25,11 @@ public class Javamon {
     public String getName() {
         return name;
     }
+
+    /**
+     * Gets list of attacks
+     * @return attacklist
+     */
 
     public List<Attack> getAttacks() {
         return attackList;
@@ -40,6 +46,10 @@ public class Javamon {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    /**
+     * List of Javamon with type of Javamon, Strength and accuracy
+     */
 
     public double decreaseHealth(double damage) throws NullPointerException {
         double newHealth = 0;

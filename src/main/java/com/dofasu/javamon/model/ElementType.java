@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Element types used in the Javamon.
+ */
 public enum ElementType {
     FIRE, WATER, GRASS, ELECTRIC, GROUND, NORMAL, FLYING, ROCK;
 
@@ -17,7 +20,11 @@ public enum ElementType {
     private static final double LESS_EFFECTIVE_MULTIPLIER = 0.5;
     private static final double SAME_MULTIPLIER = 1.0;
 
-
+    /**
+     * Gets color based on the Javamon's element type
+     *
+     * @see #buildColors()
+     */
     public String getHexColor() {
         return fxColors.get(this);
     }
@@ -64,6 +71,13 @@ public enum ElementType {
         return moreEffective;
     }
 
+    /**
+     * Calculates the effectivess based on the Javamon types during battle
+     *
+     * @param otherType ElementType of Javamon
+     * @return Effectiveness multiplier for effectiveness calculation to calculate the damage
+     */
+
     public double getEffectiveness(ElementType otherType) {
         List<ElementType> strongAgainst = mostEffective.get(this);
         if (strongAgainst.contains(otherType)) {
@@ -77,6 +91,13 @@ public enum ElementType {
 
         return SAME_MULTIPLIER;
     }
+
+    /**
+     * Effectiveness String based on the Javamon types battling against each other
+     *
+     * @param otherType ElementType of Javamon
+     * @return Effectiveness String based on the Javamon types battling against each other
+     */
 
     public String getEffectivenessString(ElementType otherType) {
         Map<Double, String> effectiveness = new HashMap<>();
